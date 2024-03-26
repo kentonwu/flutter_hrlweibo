@@ -1,6 +1,5 @@
 import 'package:flutter_hrlweibo/public.dart';
 
-
 class DioManager {
   static late final DioManager instance = DioManager._internal();
 
@@ -11,23 +10,21 @@ class DioManager {
   DioManager._internal() {
     var options = BaseOptions(
       baseUrl: Constant.baseUrl,
-      connectTimeout: 5000,
-      receiveTimeout: 3000,
+      connectTimeout: Duration(milliseconds: 5000),
+      receiveTimeout: Duration(milliseconds: 3000),
     );
     dio = Dio(options);
   }
 
-
-  
   Future<Map<String, dynamic>> post(String url, params,
       [Function? successCallBack, Function? errorCallBack]) async {
     Response? response;
     try {
-      response = await dio.post(url, data: params) ;
-    }  catch (error) {
+      response = await dio.post(url, data: params);
+    } catch (error) {
       print('请求异常: ' + error.toString());
       if (errorCallBack != null) {
-         errorCallBack(error.toString());
+        errorCallBack(error.toString());
       } else {
         return Map<String, dynamic>();
       }
@@ -58,5 +55,4 @@ class DioManager {
     }
     return Map<String, dynamic>();
   }
-
 }

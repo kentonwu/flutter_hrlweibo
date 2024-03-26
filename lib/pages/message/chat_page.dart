@@ -19,7 +19,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final ScrollController listScrollController = new ScrollController();
-  List<HrlMessage> mlistMessage =  [];
+  List<HrlMessage> mlistMessage = [];
 
   //https://stackoverflow.com/questions/50733840/trigger-a-function-from-a-widget-to-a-state-object/50739019#50739019
   final changeNotifier = new StreamController.broadcast();
@@ -37,7 +37,7 @@ class _ChatPageState extends State<ChatPage> {
 
   getHistroryMessage() {
     print("获取历史消息");
-    List<HrlMessage> mHistroyListMessage =  [];
+    List<HrlMessage> mHistroyListMessage = [];
     final HrlTextMessage mMessgae = new HrlTextMessage();
     mMessgae.text = "测试消息";
     mMessgae.msgType = HrlMessageType.text;
@@ -67,8 +67,7 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     getHistroryMessage();
     listScrollController.addListener(() {
-      if (listScrollController.position.pixels ==
-          listScrollController.position.maxScrollExtent) {
+      if (listScrollController.position.pixels == listScrollController.position.maxScrollExtent) {
         isShowLoading = true;
         setState(() {});
         Future.delayed(Duration(seconds: 2), () {
@@ -89,7 +88,7 @@ class _ChatPageState extends State<ChatPage> {
         changeNotifier.sink.add(null);
         Navigator.pop(context);
         return Future(() => true);
-       },
+      },
       child: Scaffold(
         appBar: PreferredSize(
             child: AppBar(
@@ -150,17 +149,16 @@ class _ChatPageState extends State<ChatPage> {
                       axisDirection: AxisDirection.up,
                       viewportBuilder: (context, offset) {
                         return ExpandedViewport(
-                          offset: offset  ,
+                          offset: offset,
                           axisDirection: AxisDirection.up,
                           slivers: <Widget>[
                             SliverExpanded(),
                             SliverList(
                               delegate: SliverChildBuilderDelegate(
                                 (c, i) {
-                                  final GlobalKey<ChatMessageItemState>
-                                      mMessageItemKey = GlobalKey();
-                                  mMessageItemKey.currentState
-                                      ?.methodInChild(false, "");
+                                  final GlobalKey<ChatMessageItemState> mMessageItemKey =
+                                      GlobalKey();
+                                  mMessageItemKey.currentState?.methodInChild(false, "");
                                   ChatMessageItem mChatItem = ChatMessageItem(
                                     key: mMessageItemKey,
                                     mMessage: mlistMessage[i],
@@ -168,18 +166,17 @@ class _ChatPageState extends State<ChatPage> {
                                       if (isPalyingAudio) {
                                         isPalyingAudio = false;
                                         mMessageItemKey.currentState
-                                            ?.methodInChild(
-                                                false, mPalyingPosition);
+                                            ?.methodInChild(false, mPalyingPosition);
                                         mAudioPlayer
                                             .release(); // manually release when no longer needed
                                         mPalyingPosition = "";
                                         setState(() {});
                                       } else {
-                                        Future<void> result = mAudioPlayer .play(DeviceFileSource(str));
-                                        mAudioPlayer.onPlayerComplete   .listen((event) {
+                                        Future<void> result =
+                                            mAudioPlayer.play(DeviceFileSource(str));
+                                        mAudioPlayer.onPlayerComplete.listen((event) {
                                           mMessageItemKey.currentState
-                                              ?.methodInChild(
-                                                  false, mPalyingPosition);
+                                              ?.methodInChild(false, mPalyingPosition);
                                           isPalyingAudio = false;
                                           mPalyingPosition = "";
                                         });
@@ -187,12 +184,11 @@ class _ChatPageState extends State<ChatPage> {
                                         isPalyingAudio = true;
                                         mPalyingPosition = mlistMessage[i].uuid!;
                                         mMessageItemKey.currentState
-                                            ?.methodInChild(
-                                                true, mPalyingPosition);
+                                            ?.methodInChild(true, mPalyingPosition);
                                       }
                                     },
                                   );
-                                   return mChatItem;
+                                  return mChatItem;
                                 },
                                 childCount: mlistMessage.length,
                               ),
@@ -238,8 +234,7 @@ class _ChatPageState extends State<ChatPage> {
                     mMessgae.state = HrlMessageState.sending;
                     mlistMessage.insert(0, mMessgae);
                     listScrollController.animateTo(0.00,
-                        duration: Duration(milliseconds: 1),
-                        curve: Curves.easeOut);
+                        duration: Duration(milliseconds: 1), curve: Curves.easeOut);
                     setState(() {});
                     Future.delayed(new Duration(seconds: 1), () {
                       mMessgae.state = HrlMessageState.send_succeed;
@@ -247,10 +242,9 @@ class _ChatPageState extends State<ChatPage> {
                     });
                   },
                   onImageSelectCallBack: (value) {
-                    File image = new File(
-                        value?.path??""); // Or any other way to get a File instance.
-                    Future<ui.Image> decodedImage =
-                        decodeImageFromList(image.readAsBytesSync());
+                    File image =
+                        new File(value?.path ?? ""); // Or any other way to get a File instance.
+                    Future<ui.Image> decodedImage = decodeImageFromList(image.readAsBytesSync());
 
                     decodedImage.then((result) {
                       print("图片的宽:" + "${result.width}");
@@ -265,8 +259,7 @@ class _ChatPageState extends State<ChatPage> {
                     mMessgae.state = HrlMessageState.sending;
                     mlistMessage.insert(0, mMessgae);
                     listScrollController.animateTo(0.00,
-                        duration: Duration(milliseconds: 1),
-                        curve: Curves.easeOut);
+                        duration: Duration(milliseconds: 1), curve: Curves.easeOut);
                     setState(() {});
                     Future.delayed(new Duration(seconds: 1), () {
                       mMessgae.state = HrlMessageState.send_succeed;
@@ -283,8 +276,7 @@ class _ChatPageState extends State<ChatPage> {
                     mMessgae.state = HrlMessageState.sending;
                     mlistMessage.insert(0, mMessgae);
                     listScrollController.animateTo(0.00,
-                        duration: Duration(milliseconds: 1),
-                        curve: Curves.easeOut);
+                        duration: Duration(milliseconds: 1), curve: Curves.easeOut);
                     setState(() {});
                     Future.delayed(new Duration(seconds: 1), () {
                       mMessgae.state = HrlMessageState.send_succeed;
@@ -301,12 +293,12 @@ class _ChatPageState extends State<ChatPage> {
 
 class MyBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
+  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
     if (Platform.isAndroid || Platform.isFuchsia) {
       return child;
     } else {
-      return super.buildViewportChrome(context, child, axisDirection);
+      return super
+          .buildOverscrollIndicator(context, child, ScrollableDetails(direction: axisDirection));
     }
   }
 }

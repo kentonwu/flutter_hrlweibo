@@ -29,8 +29,7 @@ class WeiBoItemWidget extends StatelessWidget {
 }
 
 //整个item布局
-Widget _wholeItemWidget(
-    BuildContext context, WeiBoModel weiboItem, bool isDetail) {
+Widget _wholeItemWidget(BuildContext context, WeiBoModel weiboItem, bool isDetail) {
   return Container(
     color: Colors.white,
     child: Column(
@@ -47,10 +46,7 @@ Widget _wholeItemWidget(
             children: <Widget>[
               new Container(
                 margin: EdgeInsets.only(
-                    left: 15,
-                    right: 15,
-                    bottom: 10,
-                    top: weiboItem.containZf ? 0 : 12),
+                    left: 15, right: 15, bottom: 10, top: weiboItem.containZf ? 0 : 12),
                 height: 1,
                 color: Color(0xffDBDBDB),
               ), //下划线
@@ -90,8 +86,7 @@ Widget _authorRow(BuildContext context, WeiBoModel weiboItem) {
                       shape: BoxShape.circle,
                       color: Colors.transparent,
                       image: DecorationImage(
-                          image: NetworkImage(weiboItem.userInfo.headurl),
-                          fit: BoxFit.cover),
+                          image: NetworkImage(weiboItem.userInfo.headurl), fit: BoxFit.cover),
                     ))
                 : Stack(
                     children: <Widget>[
@@ -102,8 +97,7 @@ Widget _authorRow(BuildContext context, WeiBoModel weiboItem) {
                             shape: BoxShape.circle,
                             color: Colors.transparent,
                             image: DecorationImage(
-                                image: NetworkImage(weiboItem.userInfo.headurl),
-                                fit: BoxFit.cover),
+                                image: NetworkImage(weiboItem.userInfo.headurl), fit: BoxFit.cover),
                           )),
                       Positioned(
                         right: 0,
@@ -155,26 +149,21 @@ Widget _authorRow(BuildContext context, WeiBoModel weiboItem) {
                 padding: const EdgeInsets.fromLTRB(6.0, 2.0, 0.0, 0.0),
                 child: weiboItem.tail.isEmpty
                     ? Text(weiboItem.userInfo.decs,
-                        style:
-                            TextStyle(color: Color(0xff808080), fontSize: 11.0))
+                        style: TextStyle(color: Color(0xff808080), fontSize: 11.0))
                     : Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           Text(
                               DateUtil.getFormatTime(
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                      weiboItem.createtime)),
-                              style: TextStyle(
-                                  color: Color(0xff808080), fontSize: 11.0)),
+                                  DateTime.fromMillisecondsSinceEpoch(weiboItem.createtime)),
+                              style: TextStyle(color: Color(0xff808080), fontSize: 11.0)),
                           Container(
                             margin: EdgeInsets.only(left: 7, right: 7),
                             child: Text("来自",
-                                style: TextStyle(
-                                    color: Color(0xff808080), fontSize: 11.0)),
+                                style: TextStyle(color: Color(0xff808080), fontSize: 11.0)),
                           ),
                           Text(weiboItem.tail,
-                              style: TextStyle(
-                                  color: Color(0xff5B778D), fontSize: 11.0))
+                              style: TextStyle(color: Color(0xff5B778D), fontSize: 11.0))
                         ],
                       )),
           ],
@@ -184,8 +173,7 @@ Widget _authorRow(BuildContext context, WeiBoModel weiboItem) {
               alignment: FractionalOffset.centerRight,
               child: GestureDetector(
                 child: Container(
-                  padding: new EdgeInsets.only(
-                      top: 4.0, bottom: 4.0, left: 8.0, right: 8.0),
+                  padding: new EdgeInsets.only(top: 4.0, bottom: 4.0, left: 8.0, right: 8.0),
                   decoration: new BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: Colors.orange),
@@ -257,7 +245,7 @@ Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
                 color: Color(0xff5B778D),
                 fontSize: 15,
               ),
-              renderText: ({String  str='', String  pattern=''}) {
+              renderText: ({String str = '', String pattern = ''}) {
                 Map<String, String?> map = Map<String, String>();
                 RegExp customRegExp = RegExp(pattern);
                 RegExpMatch? match = customRegExp.firstMatch(str);
@@ -296,11 +284,10 @@ Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
                 color: Color(0xff5B778D),
                 fontSize: 15,
               ),
-              renderText: ({String str='', String pattern=''}) {
+              renderText: ({String str = '', String pattern = ''}) {
                 Map<String, String> map = Map<String, String>();
 
-                String idStr =
-                    str.substring(str.indexOf(":") + 1, str.lastIndexOf("#"));
+                String idStr = str.substring(str.indexOf(":") + 1, str.lastIndexOf("#"));
                 String showStr = str
                     .substring(str.indexOf("#"), str.lastIndexOf("#") + 1)
                     .replaceAll(":" + idStr, "");
@@ -335,7 +322,7 @@ Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
               Map<String, String> map = Map<String, String>();
               String mEmoji2 = "";
               try {
-                String mEmoji = str?.replaceAll(RegExp('(\\[/)|(\\])'), "")??"";
+                String mEmoji = str?.replaceAll(RegExp('(\\[/)|(\\])'), "") ?? "";
                 int mEmojiNew = int.parse(mEmoji);
                 mEmoji2 = String.fromCharCode(mEmojiNew);
               } on Exception catch (_) {
@@ -369,7 +356,7 @@ Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
                       content: new Text("点击全文了"),
                       actions: <Widget>[
                         // usually buttons at the bottom of the dialog
-                        new FlatButton(
+                        new ElevatedButton(
                           child: new Text("Close"),
                           onPressed: () {},
                         ),
@@ -383,8 +370,7 @@ Widget textContent(String mTextContent, BuildContext context, bool isDetail) {
 }
 
 //转发内容的布局
-Widget _RetWeetLayout(
-    BuildContext context, WeiBoModel weiboItem, bool isDetail) {
+Widget _RetWeetLayout(BuildContext context, WeiBoModel weiboItem, bool isDetail) {
   if (weiboItem.containZf) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
@@ -501,8 +487,7 @@ Widget _RePraCom(BuildContext context, WeiBoModel weiboItem) {
                   return onLikeButtonTapped(isLiked, weiboItem);
                 },
                 size: 21,
-                circleColor:
-                    CircleColor(start: Colors.orange, end: Colors.deepOrange),
+                circleColor: CircleColor(start: Colors.orange, end: Colors.deepOrange),
                 bubblesColor: BubblesColor(
                   dotPrimaryColor: Colors.orange,
                   dotSecondaryColor: Colors.deepOrange,
@@ -635,8 +620,8 @@ Widget _NineGrid(BuildContext context, List<String> picUrlList) {
         }
         if (len == 1) {
           rowArr.add(Container(
-            constraints: BoxConstraints(
-                maxHeight: 250, maxWidth: 250, minHeight: 200, minWidth: 200),
+            constraints:
+                BoxConstraints(maxHeight: 250, maxWidth: 250, minHeight: 200, minWidth: 200),
             child: Padding(
               padding: const EdgeInsets.all(2.0),
               child: Image.network(picList[index], fit: BoxFit.cover),
@@ -657,8 +642,7 @@ Widget _NineGrid(BuildContext context, List<String> picUrlList) {
               }
             } else {
               if (index == 1 || index == 4 || index == 7) {
-                mMargin =
-                    const EdgeInsets.only(left: 2.5, right: 2.5, bottom: 5);
+                mMargin = const EdgeInsets.only(left: 2.5, right: 2.5, bottom: 5);
               } else if (index == 0 || index == 3 || index == 6) {
                 mMargin = const EdgeInsets.only(right: 2.5, bottom: 5);
               } else if (index == 2 || index == 5 || index == 8) {

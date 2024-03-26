@@ -34,16 +34,14 @@ class SettingHead extends StatelessWidget {
                       new Expanded(
                         child: new Container(
                           margin: const EdgeInsets.only(left: 20.0),
-                          child: Text('头像管理',
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.black)),
+                          child: Text('头像管理', style: TextStyle(fontSize: 14, color: Colors.black)),
                         ),
                       ),
                       new Container(
                         margin: new EdgeInsets.symmetric(horizontal: 5.0),
                         child: new CircleAvatar(
                           backgroundImage:
-                              new NetworkImage(UserUtil.getUserInfo().headurl??"null"),
+                              new NetworkImage(UserUtil.getUserInfo().headurl ?? "null"),
                           radius: 20.0,
                         ),
                       ),
@@ -79,7 +77,7 @@ class SettingHead extends StatelessWidget {
 class SettingCommon extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const SettingCommon({required this.title, required this.content ,required this.onPressed});
+  const SettingCommon({required this.title, required this.content, required this.onPressed});
 
   final String title;
   final String content;
@@ -102,16 +100,12 @@ class SettingCommon extends StatelessWidget {
                       new Expanded(
                         child: new Container(
                           margin: const EdgeInsets.only(left: 20.0),
-                          child: Text(title,
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.black)),
+                          child: Text(title, style: TextStyle(fontSize: 14, color: Colors.black)),
                         ),
                       ),
                       new Container(
                         margin: new EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Text(content,
-                            style:
-                                TextStyle(fontSize: 14, color: Colors.black)),
+                        child: Text(content, style: TextStyle(fontSize: 14, color: Colors.black)),
                       ),
                       new Container(
                         margin: const EdgeInsets.only(left: 5.0, right: 15),
@@ -168,28 +162,26 @@ class _SettingPageState extends State<SettingPage> {
                 showModalBottomSheet(
                     context: context,
                     builder: (context) {
-                      return HeadChooseWidget(
-                          chooseImgCallBack: (XFile? mHeadFile) {
+                      return HeadChooseWidget(chooseImgCallBack: (XFile? mHeadFile) {
                         FormData formData = FormData.fromMap({
                           "userId": UserUtil.getUserInfo().id,
-                          "headFile": MultipartFile.fromFileSync(mHeadFile?.path??"")
+                          "headFile": MultipartFile.fromFileSync(mHeadFile?.path ?? "")
                         });
 
-                        DioManager.instance
-                            .post(ServiceUrl.updateHead, formData, (data) {
-                           print("返回的头像的url:${data}");
+                        DioManager.instance.post(ServiceUrl.updateHead, formData, (data) {
+                          print("返回的头像的url:${data}");
                           UserUtil.saveUserHeadUrl(data);
                           ToastUtil.show('提交成功!');
                           setState(() {});
                         }, (error) {
-                             ToastUtil.show(error);
-                        }  );
+                          ToastUtil.show(error);
+                        });
                       });
                     });
               }),
               SettingCommon(
                   title: "用户昵称",
-                  content: UserUtil.getUserInfo().nick??"null",
+                  content: UserUtil.getUserInfo().nick ?? "null",
                   onPressed: () {
                     Routes.navigateTo(context, '${Routes.changeNickNamePage}');
                   }),
@@ -242,18 +234,16 @@ class _SettingPageState extends State<SettingPage> {
                           return AlertDialog(
                             content: Text('退出登录?'),
                             actions: <Widget>[
-                              FlatButton(
+                              ElevatedButton(
                                 child: Text('确定'),
                                 onPressed: () {
                                   UserUtil.loginout();
                                   Navigator.of(context).pop();
-                                  Routes.navigateTo(
-                                      context, '${Routes.loginPage}',
-                                      clearStack: true,
-                                      transition: TransitionType.fadeIn);
+                                  Routes.navigateTo(context, '${Routes.loginPage}',
+                                      clearStack: true, transition: TransitionType.fadeIn);
                                 },
                               ),
-                              FlatButton(
+                              ElevatedButton(
                                 child: Text('取消'),
                                 onPressed: () {
                                   Navigator.of(context).pop();
@@ -263,8 +253,7 @@ class _SettingPageState extends State<SettingPage> {
                             backgroundColor: Colors.white,
                             elevation: 20,
                             // 设置成 圆角
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           );
                         },
                       );
@@ -274,8 +263,7 @@ class _SettingPageState extends State<SettingPage> {
                         vertical: 15.0,
                       ),
                       child: Center(
-                        child: Text('退出微博',
-                            style: TextStyle(fontSize: 14, color: Colors.red)),
+                        child: Text('退出微博', style: TextStyle(fontSize: 14, color: Colors.red)),
                       ),
                     )),
               ),

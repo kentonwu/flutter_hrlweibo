@@ -46,8 +46,7 @@ class _ChangeNickNamePageState extends State<ChangeNickNamePage> {
                       controller: _mEtController,
                       decoration: InputDecoration(
                         hintText: "请输入您的昵称",
-                        hintStyle:
-                            TextStyle(color: Color(0xff999999), fontSize: 16),
+                        hintStyle: TextStyle(color: Color(0xff999999), fontSize: 16),
                         contentPadding: EdgeInsets.only(left: 15, right: 15),
                         border: InputBorder.none,
                       ),
@@ -59,41 +58,22 @@ class _ChangeNickNamePageState extends State<ChangeNickNamePage> {
                     margin: EdgeInsets.only(top: 10, left: 10),
                     child: new Text(
                       "4-30个字符,支持中英文、数字",
-                      style: new TextStyle(
-                          fontSize: 14.0, color: Color(0xff999999)),
+                      style: new TextStyle(fontSize: 14.0, color: Color(0xff999999)),
                     ),
                   )),
               new Container(
                 margin: const EdgeInsets.only(top: 60.0, left: 20, right: 20),
                 child: SizedBox(
                   width: double.infinity,
-                  child: new RaisedButton(
-                    color: Color(0xffFF8200),
-                    textColor: Colors.white,
-                    disabledTextColor: Colors.white,
-                    disabledColor: Color(0xffFFD8AF),
-                    elevation: 0,
-                    disabledElevation: 0,
-                    highlightElevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(25.0),
-                        topLeft: Radius.circular(25.0),
-                        bottomRight: Radius.circular(25.0),
-                        bottomLeft: Radius.circular(25.0),
-                      ),
-                    ),
+                  child: new ElevatedButton(
                     onPressed: () {
                       if (_mEtController.text.isEmpty) {
                         ToastUtil.show('昵称不能为空!');
                         return;
                       }
-                      FormData params = FormData.fromMap({
-                        'userId': UserUtil.getUserInfo().id,
-                        'nick': _mEtController.text
-                      });
-                      DioManager.instance
-                          .post(ServiceUrl.updateNick, params, (data) {
+                      FormData params = FormData.fromMap(
+                          {'userId': UserUtil.getUserInfo().id, 'nick': _mEtController.text});
+                      DioManager.instance.post(ServiceUrl.updateNick, params, (data) {
                         ToastUtil.show('修改昵称成功!');
                         UserUtil.saveUserNick(_mEtController.text);
                         Constant.eventBus.fire(ChangeInfoEvent());

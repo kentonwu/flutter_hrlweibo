@@ -28,8 +28,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
       "pageNum": "1",
       "pageSize": Constant.PAGE_SIZE,
     });
-    DioManager.instance.post(ServiceUrl.getMsgCommentList, formData,
-        (data) {
+    DioManager.instance.post(ServiceUrl.getMsgCommentList, formData, (data) {
       ComZanListModel mList = ComZanListModel.fromJson(data);
       mZanList.clear();
       mZanList = mList.list;
@@ -44,8 +43,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
       "pageNum": page,
       "pageSize": Constant.PAGE_SIZE,
     });
-    await DioManager.instance.post(ServiceUrl.getMsgCommentList, formData,
-        (data) {
+    await DioManager.instance.post(ServiceUrl.getMsgCommentList, formData, (data) {
       ComZanListModel mList = ComZanListModel.fromJson(data);
       mZanList.addAll(mList.list);
       setState(() {
@@ -67,8 +65,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
     getSubDataRefresh();
 
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         print("调用加载更多");
         if (!isloadingMore) {
           if (ishasMore) {
@@ -213,8 +210,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           text: mModel.weibcontent,
-                          style: TextStyle(
-                              height: 1.5, fontSize: 13, color: Colors.grey),
+                          style: TextStyle(height: 1.5, fontSize: 13, color: Colors.grey),
                           parse: <MatchText>[
                             MatchText(
                                 pattern: r"\[(@[^:]+):([^\]]+)\]",
@@ -223,16 +219,12 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                                   fontSize: 13,
                                 ),
                                 renderText: ({String? str, String? pattern}) {
-                                  Map<String, String> map =
-                                      Map<String, String>();
+                                  Map<String, String> map = Map<String, String>();
                                   RegExp customRegExp = RegExp(pattern!);
                                   Match match = customRegExp.firstMatch(str!)!;
                                   map['display'] = match.group(1)!;
                                   map['value'] = match.group(2)!;
-                                  print("正则:" +
-                                      match.group(1)! +
-                                      "---" +
-                                      match.group(2)!);
+                                  print("正则:" + match.group(1)! + "---" + match.group(2)!);
                                   return map;
                                 },
                                 onTap: (url) {
@@ -245,7 +237,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                                         content: new Text("$url clicked."),
                                         actions: <Widget>[
                                           // usually buttons at the bottom of the dialog
-                                          new FlatButton(
+                                          new ElevatedButton(
                                             child: new Text("Close"),
                                             onPressed: () {},
                                           ),
@@ -263,15 +255,12 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                                   fontSize: 13,
                                 ),
                                 renderText: ({String? str, String? pattern}) {
-                                  Map<String, String> map =
-                                      Map<String, String>();
+                                  Map<String, String> map = Map<String, String>();
 
-                                  String idStr = str!.substring(
-                                      str.indexOf(":") + 1,
-                                      str.lastIndexOf("#"));
+                                  String idStr =
+                                      str!.substring(str.indexOf(":") + 1, str.lastIndexOf("#"));
                                   String showStr = str
-                                      .substring(str.indexOf("#"),
-                                          str.lastIndexOf("#") + 1)
+                                      .substring(str.indexOf("#"), str.lastIndexOf("#") + 1)
                                       .replaceAll(":" + idStr, "");
                                   map['display'] = showStr;
                                   map['value'] = idStr;
@@ -289,7 +278,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                                         content: new Text("点击的id:" + url),
                                         actions: <Widget>[
                                           // usually buttons at the bottom of the dialog
-                                          new FlatButton(
+                                          new ElevatedButton(
                                             child: new Text("Close"),
                                             onPressed: () {},
                                           ),
@@ -307,10 +296,9 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                               ),
                               renderText: ({String? str, String? pattern}) {
                                 Map<String, String> map = Map<String, String>();
-                                 String mEmoji2 = "";
+                                String mEmoji2 = "";
                                 try {
-                                  String mEmoji = str?.replaceAll(
-                                      RegExp('(\\[/)|(\\])'), "")??"";
+                                  String mEmoji = str?.replaceAll(RegExp('(\\[/)|(\\])'), "") ?? "";
                                   int mEmojiNew = int.parse(mEmoji);
                                   mEmoji2 = String.fromCharCode(mEmojiNew);
                                 } on Exception catch (_) {
@@ -330,8 +318,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                                   fontSize: 15,
                                 ),
                                 renderText: ({String? str, String? pattern}) {
-                                  Map<String, String> map =
-                                      Map<String, String>();
+                                  Map<String, String> map = Map<String, String>();
                                   map['display'] = '全文';
                                   map['value'] = '全文';
                                   return map;
@@ -347,7 +334,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                                         content: new Text("点击的id:" + url),
                                         actions: <Widget>[
                                           // usually buttons at the bottom of the dialog
-                                          new FlatButton(
+                                          new ElevatedButton(
                                             child: new Text("Close"),
                                             onPressed: () {},
                                           ),
@@ -382,8 +369,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                       shape: BoxShape.circle,
                       color: Colors.transparent,
                       image: DecorationImage(
-                          image: NetworkImage(mZanItem.userheadurl),
-                          fit: BoxFit.cover),
+                          image: NetworkImage(mZanItem.userheadurl), fit: BoxFit.cover),
                     ))
                 : Stack(
                     children: <Widget>[
@@ -394,8 +380,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                             shape: BoxShape.circle,
                             color: Colors.transparent,
                             image: DecorationImage(
-                                image: NetworkImage(mZanItem.userheadurl),
-                                fit: BoxFit.cover),
+                                image: NetworkImage(mZanItem.userheadurl), fit: BoxFit.cover),
                           )),
                       Positioned(
                         right: 0,
@@ -424,9 +409,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                         child: Text(mZanItem.username,
                             style: TextStyle(
                                 fontSize: 15.0,
-                                color: mZanItem.ismember == 0
-                                    ? Colors.black
-                                    : Color(0xffF86119)))),
+                                color: mZanItem.ismember == 0 ? Colors.black : Color(0xffF86119)))),
                   ),
                   Center(
                     child: mZanItem.ismember == 0
@@ -449,19 +432,15 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                     children: <Widget>[
                       Text(
                           DateUtil.getFormatTime2(
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  mZanItem.createtime)),
-                          style: TextStyle(
-                              color: Color(0xff808080), fontSize: 11.0)),
+                              DateTime.fromMillisecondsSinceEpoch(mZanItem.createtime)),
+                          style: TextStyle(color: Color(0xff808080), fontSize: 11.0)),
                       Container(
                         margin: EdgeInsets.only(left: 7, right: 7),
-                        child: Text("来自",
-                            style: TextStyle(
-                                color: Color(0xff808080), fontSize: 11.0)),
+                        child:
+                            Text("来自", style: TextStyle(color: Color(0xff808080), fontSize: 11.0)),
                       ),
                       Text(mZanItem.tail == null ? "" : mZanItem.tail,
-                          style: TextStyle(
-                              color: Color(0xff5B778D), fontSize: 11.0))
+                          style: TextStyle(color: Color(0xff5B778D), fontSize: 11.0))
                     ],
                   )),
             ],
@@ -471,8 +450,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
                 alignment: FractionalOffset.centerRight,
                 child: GestureDetector(
                   child: Container(
-                    padding: new EdgeInsets.only(
-                        top: 4.0, bottom: 4.0, left: 8.0, right: 8.0),
+                    padding: new EdgeInsets.only(top: 4.0, bottom: 4.0, left: 8.0, right: 8.0),
                     decoration: new BoxDecoration(
                       color: Colors.white,
                       border: Border.all(color: Colors.grey),
@@ -514,8 +492,7 @@ class _MsgCommentPageState extends State<MsgCommentPage> {
             Container(
               child: Center(
                 child: GestureDetector(
-                    child: Text("设置",
-                        style: TextStyle(fontSize: 16, color: Colors.black)),
+                    child: Text("设置", style: TextStyle(fontSize: 16, color: Colors.black)),
                     onTap: () {}),
               ),
               margin: EdgeInsets.only(right: 15),

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 /// 范围样式，规定不同范围不同样式
-class RangeStyle extends Comparable<RangeStyle> {
-  RangeStyle({ required this.range, this.style});
+class RangeStyle implements Comparable<RangeStyle> {
+  RangeStyle({required this.range, this.style});
 
   /// 范围
   final TextRange range;

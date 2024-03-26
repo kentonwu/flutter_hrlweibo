@@ -38,7 +38,7 @@ class _FeedBackPageState extends State<FeedBackPage> {
           Navigator.of(context).pop();
           final ImagePicker _picker = ImagePicker();
           // Pick an image
-          final Future<XFile?> image =   _picker.pickImage(source: source);
+          final Future<XFile?> image = _picker.pickImage(source: source);
           image.then((result) {
             setState(() {
               mSelectedImageFile = result;
@@ -72,13 +72,12 @@ class _FeedBackPageState extends State<FeedBackPage> {
       // 如果已添加了9张图片，则提示不允许添加更多
       num size = mFileList.length;
       if (size >= 9) {
-        Scaffold.of(ctx).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
           content: Text("最多只能添加9张图片！"),
         ));
         return;
       }
-      showModalBottomSheet<void>(
-          context: context, builder: _bottomSheetBuilder);
+      showModalBottomSheet<void>(context: context, builder: _bottomSheetBuilder);
     }
 
     //底部布局
@@ -163,25 +162,20 @@ class _FeedBackPageState extends State<FeedBackPage> {
               Text('取消', style: TextStyle(fontSize: 16, color: Colors.black)),
               Expanded(
                   child: Center(
-                child: Text('意见反馈',
-                    style: TextStyle(fontSize: 16, color: Colors.black)),
+                child: Text('意见反馈', style: TextStyle(fontSize: 16, color: Colors.black)),
               )),
               new InkWell(
-                child: Text('发送',
-                    style: TextStyle(fontSize: 16, color: Colors.black)),
+                child: Text('发送', style: TextStyle(fontSize: 16, color: Colors.black)),
                 onTap: () {
                   mSubmitFileList.clear();
                   for (int i = 0; i < mFileList.length; i++) {
-                    mSubmitFileList.add(MultipartFile.fromFileSync(
-                        mFileList.elementAt(i)?.path??""));
+                    mSubmitFileList
+                        .add(MultipartFile.fromFileSync(mFileList.elementAt(i)?.path ?? ""));
                   }
-                  FormData formData = FormData.fromMap({
-                    "description": _mEtController.text,
-                    "files": mSubmitFileList
-                  });
+                  FormData formData = FormData.fromMap(
+                      {"description": _mEtController.text, "files": mSubmitFileList});
 
-                  DioManager.instance.post(ServiceUrl.feedback, formData,
-                      (data) {
+                  DioManager.instance.post(ServiceUrl.feedback, formData, (data) {
                     ToastUtil.show('提交成功!');
                     setState(() {
                       mFileList.clear();
@@ -251,9 +245,8 @@ class _FeedBackPageState extends State<FeedBackPage> {
                   content = Stack(
                     children: <Widget>[
                       Center(
-
                         child: Image.file(
-                      new File( mFileList[index]?.path??"")  ,
+                          new File(mFileList[index]?.path ?? ""),
                           width: double.infinity,
                           height: double.infinity,
                           fit: BoxFit.cover,

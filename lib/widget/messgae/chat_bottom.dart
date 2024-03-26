@@ -28,7 +28,7 @@ class ChatBottomInputWidget extends StatefulWidget {
 
   const ChatBottomInputWidget({
     Key? key,
-     required this.shouldTriggerChange,
+    required this.shouldTriggerChange,
     this.onSendCallBack,
     this.onImageSelectCallBack,
     this.onAudioCallBack,
@@ -48,8 +48,7 @@ class _ChatBottomInputWidgetState extends State<ChatBottomInputWidget>
 
   TextEditingController mEditController = TextEditingController();
 
-  StreamController<String> inputContentStreamController =
-      StreamController.broadcast();
+  StreamController<String> inputContentStreamController = StreamController.broadcast();
 
   Stream<String> get inputContentStream => inputContentStreamController.stream;
 
@@ -64,7 +63,6 @@ class _ChatBottomInputWidgetState extends State<ChatBottomInputWidget>
   bool mEmojiLayoutShow = false;
 
   late StreamSubscription<bool> keyboardSubscription;
-
 
   StreamSubscription? streamSubscription;
 
@@ -89,8 +87,7 @@ class _ChatBottomInputWidgetState extends State<ChatBottomInputWidget>
     super.didUpdateWidget(old);
     if (widget.shouldTriggerChange != old.shouldTriggerChange) {
       streamSubscription?.cancel();
-      streamSubscription =
-          widget.shouldTriggerChange.listen((_) => hideBottomLayout());
+      streamSubscription = widget.shouldTriggerChange.listen((_) => hideBottomLayout());
     }
   }
 
@@ -112,9 +109,8 @@ class _ChatBottomInputWidgetState extends State<ChatBottomInputWidget>
   @override
   void initState() {
     super.initState();
-    streamSubscription =
-        widget.shouldTriggerChange.listen((_) => hideBottomLayout());
-     WidgetsBinding.instance.addObserver(this);
+    streamSubscription = widget.shouldTriggerChange.listen((_) => hideBottomLayout());
+    WidgetsBinding.instance.addObserver(this);
     //   focusNode.addListener(onFocus);
 //    widget.controller.addListener(_onInputChange);
     mEditController.addListener(() {
@@ -156,19 +152,13 @@ class _ChatBottomInputWidgetState extends State<ChatBottomInputWidget>
           }
         } else {}
       }
-     });
-
-
-
-
-
+    });
   }
 
   Future requestPermission() async {
-
     // 申请结果
 
-  /*  PermissionStatus permission = await PermissionHandler()
+    /*  PermissionStatus permission = await PermissionHandler()
         .checkPermissionStatus(PermissionGroup.storage);
 
     if (permission == PermissionStatus.granted) {
@@ -261,8 +251,7 @@ class _ChatBottomInputWidgetState extends State<ChatBottomInputWidget>
           isDense: true,
           filled: true,
           fillColor: Colors.white,
-          contentPadding:
-              EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+          contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
           enabledBorder: const OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.white, width: 0.0),
             borderRadius: const BorderRadius.all(const Radius.circular(5.0)),
@@ -373,10 +362,9 @@ class _ChatBottomInputWidgetState extends State<ChatBottomInputWidget>
                 }
               }
             });
-        CrossFadeState crossFadeState =
-            checkShowSendButton(mEditController.text)
-                ? CrossFadeState.showFirst
-                : CrossFadeState.showSecond;
+        CrossFadeState crossFadeState = checkShowSendButton(mEditController.text)
+            ? CrossFadeState.showFirst
+            : CrossFadeState.showSecond;
         return AnimatedCrossFade(
           duration: const Duration(milliseconds: 0),
           crossFadeState: crossFadeState,
@@ -391,15 +379,7 @@ class _ChatBottomInputWidgetState extends State<ChatBottomInputWidget>
     return Container(
       width: 60,
       height: 30,
-      child: new RaisedButton(
-        padding: EdgeInsets.all(0),
-        color: Color(0xffFF8200),
-        textColor: Colors.white,
-        disabledTextColor: Colors.white,
-        disabledColor: Color(0xffFFD8AF),
-        elevation: 0,
-        disabledElevation: 0,
-        highlightElevation: 0,
+      child: new ElevatedButton(
         onPressed: () {
           widget.onSendCallBack?.call(mEditController.text.trim());
           mEditController.clear();
@@ -460,11 +440,10 @@ class _ChatBottomInputWidgetState extends State<ChatBottomInputWidget>
       return Visibility(
         visible: mEmojiLayoutShow,
         child: EmojiWidget(onEmojiClockBack: (value) {
-           if (0 == value) {
+          if (0 == value) {
             mEditController.clear();
           } else {
-            mEditController.text =
-                mEditController.text + String.fromCharCode(value);
+            mEditController.text = mEditController.text + String.fromCharCode(value);
           }
         }),
       );

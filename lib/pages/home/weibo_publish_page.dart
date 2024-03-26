@@ -32,12 +32,11 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
   double _softKeyHeight = SpUtil.getDouble(Constant.SP_KEYBOARD_HEGIHT, 200);
   late StreamSubscription<bool> keyboardSubscription;
 
-  List<XFile?> mFileList =[];
+  List<XFile?> mFileList = [];
   XFile? mSelectedImageFile;
-  List<MultipartFile> mSubmitFileList =[];
+  List<MultipartFile> mSubmitFileList = [];
 
-  MySpecialTextSpanBuilder _mySpecialTextSpanBuilder =
-      MySpecialTextSpanBuilder();
+  MySpecialTextSpanBuilder _mySpecialTextSpanBuilder = MySpecialTextSpanBuilder();
 
   @override
   void initState() {
@@ -60,9 +59,9 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
             mBottomLayoutShow = false;
           });
         }
-      }print('Keyboard visibility update. Is visible: $visible');
+      }
+      print('Keyboard visibility update. Is visible: $visible');
     });
-
 
     _mEtController.addListener(_printLatestValue);
   }
@@ -127,8 +126,7 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: Text('取消',
-                        style: TextStyle(fontSize: 15, color: Colors.black)),
+                    child: Text('取消', style: TextStyle(fontSize: 15, color: Colors.black)),
                   ))),
           Align(
             alignment: Alignment.center,
@@ -136,9 +134,8 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
               margin: EdgeInsets.only(top: 5, bottom: 5),
               child: Column(
                 children: <Widget>[
-                  Text('发微博',
-                      style: TextStyle(fontSize: 16, color: Colors.black)),
-                  Text(UserUtil.getUserInfo().nick??"null",
+                  Text('发微博', style: TextStyle(fontSize: 16, color: Colors.black)),
+                  Text(UserUtil.getUserInfo().nick ?? "null",
                       style: TextStyle(fontSize: 12, color: Colors.grey))
                 ],
               ),
@@ -154,16 +151,12 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
                   }
                   mSubmitFileList.clear();
                   for (int i = 0; i < mFileList.length; i++) {
-                    mSubmitFileList.add(MultipartFile.fromFileSync(
-                        mFileList.elementAt(i)?.path??""));
+                    mSubmitFileList
+                        .add(MultipartFile.fromFileSync(mFileList.elementAt(i)?.path ?? ""));
                   }
-                  FormData formData = FormData.fromMap({
-                    "userId": "1",
-                    "content": _mEtController.text,
-                    "files": mSubmitFileList
-                  });
-                  DioManager.instance
-                      .post(ServiceUrl.publishWeiBo, formData, (data) {
+                  FormData formData = FormData.fromMap(
+                      {"userId": "1", "content": _mEtController.text, "files": mSubmitFileList});
+                  DioManager.instance.post(ServiceUrl.publishWeiBo, formData, (data) {
                     ToastUtil.show('提交成功!');
                     setState(() {
                       mFileList.clear();
@@ -176,13 +169,11 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
                 },
                 child: Container(
                   margin: EdgeInsets.only(right: 15.0),
-                  padding: EdgeInsets.only(
-                      left: 8.0, right: 8.0, top: 3.0, bottom: 3.0),
+                  padding: EdgeInsets.only(left: 8.0, right: 8.0, top: 3.0, bottom: 3.0),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       color: Color(0xFFFF8200)),
-                  child: Text('发送',
-                      style: TextStyle(fontSize: 15, color: Colors.white)),
+                  child: Text('发送', style: TextStyle(fontSize: 15, color: Colors.white)),
                 ),
               )),
         ],
@@ -204,8 +195,7 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
       child: ListView(
         children: <Widget>[
           Container(
-            padding:
-                EdgeInsets.only(top: 10.0, left: 10.0, right: 10, bottom: 20),
+            padding: EdgeInsets.only(top: 10.0, left: 10.0, right: 10, bottom: 20),
             constraints: new BoxConstraints(minHeight: 50.0),
             child:
                 /*TextSpanField(
@@ -228,8 +218,7 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
               focusNode: focusNode,
               style: TextStyle(color: Colors.black, fontSize: 15),
               decoration: InputDecoration.collapsed(
-                  hintText: "分享新鲜事",
-                  hintStyle: TextStyle(color: Color(0xff919191), fontSize: 15)),
+                  hintText: "分享新鲜事", hintStyle: TextStyle(color: Color(0xff919191), fontSize: 15)),
             ),
           ),
           GridView.count(
@@ -252,14 +241,14 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
                     // 如果已添加了9张图片，则提示不允许添加更多
                     num size = mFileList.length;
                     if (size >= 9) {
-                      Scaffold.of(context).showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("最多只能添加9张图片！"),
                       ));
                       return;
                     }
                     final ImagePicker _picker = ImagePicker();
-                    final Future<XFile?> image =   _picker.pickImage(source: ImageSource.gallery);
-                     image .then((result) {
+                    final Future<XFile?> image = _picker.pickImage(source: ImageSource.gallery);
+                    image.then((result) {
                       setState(() {
                         mSelectedImageFile = result;
                       });
@@ -273,7 +262,7 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
                   children: <Widget>[
                     Center(
                       child: Image.file(
-                        File(mFileList[index]?.path??"")  ,
+                        File(mFileList[index]?.path ?? ""),
                         width: double.infinity,
                         height: double.infinity,
                         fit: BoxFit.cover,
@@ -347,10 +336,9 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
                       height: 25.0,
                     ),
                     onTap: () {
-
                       final ImagePicker _picker = ImagePicker();
-                      final Future<XFile?> image =   _picker.pickImage(source: ImageSource.gallery);
-                       image.then((result) {
+                      final Future<XFile?> image = _picker.pickImage(source: ImageSource.gallery);
+                      image.then((result) {
                         setState(() {
                           mSelectedImageFile = result;
                         });
@@ -367,26 +355,16 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
                       height: 25.0,
                     ),
                     onTap: () {
-                      Routes.navigateTo(
-                              context, '${Routes.weiboPublishAtUsrPage}')
-                          .then((result) {
+                      Routes.navigateTo(context, '${Routes.weiboPublishAtUsrPage}').then((result) {
                         WeiboAtUser mAtUser = result as WeiboAtUser;
                         if (mAtUser != null) {
-                          mWeiBoSubmitText = mWeiBoSubmitText +
-                              "[@" +
-                              mAtUser.nick +
-                              ":" +
-                              mAtUser.id +
-                              "]";
+                          mWeiBoSubmitText =
+                              mWeiBoSubmitText + "[@" + mAtUser.nick + ":" + mAtUser.id + "]";
                           //   _mEtController.text = _mEtController.text + "@" + mAtUser.nick+" ";
                           //   print("_mEtControllerfield的值:" + mWeiBoSubmitText);
 
-                          _mEtController.text = _mEtController.text +
-                              "[@" +
-                              mAtUser.nick +
-                              ":" +
-                              mAtUser.id +
-                              "]";
+                          _mEtController.text =
+                              _mEtController.text + "[@" + mAtUser.nick + ":" + mAtUser.id + "]";
                           //   _mEtController.buildTextSpan()
                           // _mEtController.text=_mEtController.text+"#aaaa#" ;
                         }
@@ -403,9 +381,7 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
                       height: 25.0,
                     ),
                     onTap: () {
-                      Routes.navigateTo(
-                              context, '${Routes.weiboPublishTopicPage}')
-                          .then((result) {
+                      Routes.navigateTo(context, '${Routes.weiboPublishTopicPage}').then((result) {
                         WeiBoTopic mTopic = result;
 
                         if (mTopic != null) {
@@ -485,8 +461,7 @@ class _WeiBoPublishPageState extends State<WeiBoPublishPage> {
                 if (value == 0) {
                   _mEtController.clear();
                 } else {
-                  _mEtController.text =
-                      _mEtController.text + "[/" + value.toString() + "]";
+                  _mEtController.text = _mEtController.text + "[/" + value.toString() + "]";
                 }
               }),
             ),
